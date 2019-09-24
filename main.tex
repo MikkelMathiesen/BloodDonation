@@ -1,0 +1,294 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{dutchcal}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{blkarray}
+\usepackage{geometry}  
+\usepackage{bigstrut}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{lastpage}
+\usepackage{tabto}
+\usepackage{wrapfig}
+\usepackage[utf8]{inputenc}
+\usepackage[font=small,labelfont=bf]{caption}
+\newcommand{\mc}[1]{\textbf{Mc: #1}}
+\usepackage{fancyhdr}
+\usemintedstyle{xcode}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{dutchcal}
+
+\usepackage{babelbib}
+\usepackage{natbib}
+
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{blkarray}
+\usepackage{bigstrut}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{lastpage}
+\usepackage{tabto}
+\usepackage{wrapfig}
+\usepackage[utf8]{inputenc}
+\setminted[python]{numbersep = 10pt, bgcolor = lightgrey, breaklines, autogobble, fontsize=\footnotesize, baselinestretch=1.2}
+\usepackage{adjustbox}
+\definecolor{lightgrey}{rgb}{0.97,0.97,0.97}
+\definecolor{grey}{rgb}{0.7,0.7,0.7}
+\setlength{\parindent}{0pt}
+%\pagestyle{fancy}
+\fancyfoot{}
+\lhead{\textbf{M. L. Mathiesen} \\
+ \textbf{J. Lauritsen}}
+\pagestyle{plain} 
+\fancyfoot[c]{Page \thepage\ of \pageref{LastPage}}
+\pagestyle{fancy}
+
+\usepackage{lipsum} 
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\usepackage{multirow}
+
+\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
+\algtext*{Indent}
+\algtext*{EndIndent}
+
+\begin{document}
+	\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+		\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for horizontal lines, change thickness here
+		
+		\center % centre everything on the page
+		
+		%------------------------------------------------
+		%	Headings
+		%------------------------------------------------
+		
+		\textsc{\LARGE University of Southern Denmark}\\[0.5cm] % Main heading such as the name of your university/college
+		
+		\textsc{\Large Dept. of Mathematics \& Computer Science
+         }\\[0.5cm] % Minor heading such as course title
+		
+		%------------------------------------------------
+		%	Title
+		%------------------------------------------------
+		
+		\HRule\\[0.6cm]
+		
+		{\huge\bfseries ISA \\ [0.4cm] Blood donor appointment scheduling
+		}\\[0.4cm] % Title of your document
+		
+		\HRule\\[2 cm]
+		
+		%------------------------------------------------
+		%	Author(s)
+		%------------------------------------------------
+		
+	
+		\begin{flushleft}
+			\large
+			\textit{Authors}\\
+			Mikkel Liljegren Mathiesen\\
+			\textit{08-10-93}, Mathematics–economics, 9th-semester\\
+			\ \\
+			Johannes Lauritsen\\
+			\textit{12.05.95}, Mathematics–economics, 9th-semester
+			 % Your name
+		\end{flushleft}
+		
+		\begin{flushleft}
+			\large
+			\textit{Supervisor}\\
+			Assistant Prof. Jacopo Mauro
+			
+
+			 % Your name
+		\end{flushleft}
+
+		% If you don't want a supervisor, uncomment the two lines below and comment the code above
+		
+		
+		%------------------------------------------------
+		%	Date
+		%------------------------------------------------
+		
+		\vfill\vfill\vfill % Position the date 3/4 down the remaining page
+		
+		{\large\today} % Date, change the \today to a set date if you want to be precise
+		
+		%------------------------------------------------
+		%	Logo
+		%------------------------------------------------
+		
+		\vfill\vfill
+
+		%----------------------------------------------------------------------------------------
+		
+		\vfill % Push the date up 1/4 of the remaining page
+		
+	\end{titlepage}
+	\pagebreak
+
+
+\textbf{Sworn statement}\\ 
+”I hereby solemnly declare that I have personally and independently prepared this paper. All quotations in the text have been marked as such, and the paper or considerable parts of it have not previously been subject to any examination or assessment.” \\\\
+Mikkel Liljegren Mathiesen\\
+Johannes Lauritsen
+
+\section*{Focus area}
+Finding the most efficient formulation of the TSP (Traveling Salesman Problem) formulation and also for the Time Dependent TSP (TDTSP).
+
+\section*{Project description}
+A formulation is a way for formulate a problem using for example LP or MILP-problem.\\
+
+Since the TSP is NP-hard, the most efficient formulation of the TSP is the heuristic algorithms that run in polynomial time and provide close to optimal solutions. For the time dependant TSP-problem we are looking for the most efficient MIP formulation for the time dependent TSP and solving the problem to optimality, with smallest amount of time and computational effort.\\
+
+The question for research would be to ask for the most efficient formulation for the time dependent TSP based on the literature search. One formulation is presented in the third paper, it can be improved by ideas in the first two, and also some other formulations need to be checked in the literature.\\
+
+\textbf{Methods}: Mixed integer programming.\\
+
+\textbf{Tools}: Commercial solver Gurobi with Python as a modeling environment.\\
+
+\textbf{Courses}: Linear and Integer Programming, Combinatorial Optimization.\\
+
+
+\textbf{Literature}:
+
+\begin{enumerate}
+    \item Seda Baş, Giuliana Carello, Ettore Lanzarone, Semih Yalçındağ. An appointment scheduling framework to balance the production of blood units from donation. European Journal of Operational Research. Volume 265. Issue 3. 2018
+
+    \item Jacob Feldman, Nan Liu, Huseyin Topaloglu, Serhan Ziya. Appointment Scheduling Under Patient Preference and No-Show Behavior. Operations Research. 2014
+
+    \item Guido C. Kaandorp, Ger Koole. Optimal outpatient appointment scheduling. Kluwer Academic Publishers-Plenum Publishers. 2007
+
+    \item Kemper, Benjamin \& Klaassen, Chris \& Mandjes, Michel. Optimized appointment scheduling. European Journal of Operational Research. 2014
+
+    \item Samorani, Michele \& LaGanga, Linda. Outpatient Appointment Scheduling Given Individual Day-Dependent No-Show Predictions. European Journal of Operational Research. 2015
+
+    \item Crowther, Mark \& J Cook, Deborah. Trials and Tribulations of Systematic Reviews and Meta-Analyses. Hematology / the Education Program of the American Society of Hematology. American Society of Hematology. Education Program. 2007
+
+    \item Matoušek, Jirí \& Gärtner, Bernd. Understanding and Using Linear Programming. 2007
+
+    \item Russell, Stuart \& Norvig, Peter. Artificial Intelligence: A Modern Approach.  2009
+\end{enumerate}
+
+\thispagestyle{empty}
+\newpage
+\tableofcontents
+\setcounter{page}{1}
+
+
+\section*{Introduction}
+
+
+
+\textbf{Research question}
+
+\bigbreak
+
+Find a schedule for blood and plasma donors which considers no-shows by using overbooking, in order to minimize gaps and hence maximizing the number of completed blood and plasma donations without intro  ducing waiting time for the donor.
+
+\section*{Systematic Literature Review}
+
+Search string: appointment scheduling no show \\
+Publication date: 16/09/2013 - 16/09/2019 (6 years) \\
+Language: English \\
+Discipline: engineering, business, education, applied sciences, computer science, international relations, mathematics, social sciences, statistics, political science, economics \\
+
+\textbf{Step 1: Develop inclusion and exclusion criteria}
+
+\begin{table}[H]
+\begin{tabular}{@{}lll@{}}
+\toprule
+Criteria & Inclusion criteria & Exclusion criteria \\ \midrule
+1        &    Articles must be published between 1990 and 2013                 &   Any articles outside of the designated dates 1990–2013                   \\
+2        &      All retrieved articles must be published in English language              &   Any articles that were not published in the English language were excluded.                 \\
+3     &  Only include articles about blood donation & Exclude articles about other similar scheduling problems. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\bigbreak
+\textbf{Step 2: Systematic searches in different databases}
+
+We only have access to University of Southern Denmark's library of articles, hence we will only search inside this database (this database includes more than 600 different databases).
+
+\bigbreak
+\textbf{Step 3: Importing of search results into individual bibliographic software package}
+
+We chose not to use EndnoteX9 as it does not work directly with the collection of databases that SDU's library offer. So we searched directly on SDU's library's webpage.
+
+
+\bigbreak
+\textbf{Step 4: Documenting the search}
+
+\bigbreak
+
+\textbf{Step 5: Deletion of database duplicates using hierarchy strategy}
+
+Not relevant, since we only used one database.
+\bigbreak
+
+\textbf{Step 6: Organisation of relevant and irrelevant articles }
+
+When all relevant articles were found, they were sorted into two categories: "Useful" and "Not useful". The way this worked, was that we both read the abstract of each article and it could only be placed in "Useful" if both agreed that it was indeed useful.
+\bigbreak
+
+\textbf{Step 7: Search of other articles, books, policies by other forms of searching }
+
+Since we found many relevant articles on SDU's library's webpage, then this was the only place we searched.
+\bigbreak
+
+\textbf{Step 8: Systematic rating of relevant articles }
+
+
+\bigbreak
+
+\textbf{Step 9: Validation check }
+
+\bigbreak
+
+\textbf{Step 10: Summarising the results of the data analysis in the systematic literature}
+
+\bigbreak
+
+
+Articles 1-5
+Review 6
+Books 7-8
+
+\section*{Blood donation system}
+
+\section*{Simulation model}
+
+\section*{Experiments}
+
+\section*{Results}
+
+\section*{Conclusion}
+
+\newpage
+
+\bibliographystyle{unsrt}
+\bibliography{R}
+
+\end{document}
