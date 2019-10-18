@@ -22,6 +22,7 @@
 \usepackage{wrapfig}
 \usepackage[utf8]{inputenc}
 \usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
 \newcommand{\mc}[1]{\textbf{Mc: #1}}
 \usepackage{fancyhdr}
 \usemintedstyle{xcode}
@@ -30,10 +31,10 @@
 \usepackage{microtype}
 \usepackage{booktabs}
 \usepackage{dutchcal}
-
+\usepackage{framed}
 \usepackage{babelbib}
 \usepackage{natbib}
-
+\usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{minted}
@@ -73,6 +74,8 @@
 \algtext*{Indent}
 \algtext*{EndIndent}
 
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X} 
+
 \begin{document}
 	\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
 		\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for horizontal lines, change thickness here
@@ -92,7 +95,7 @@
 		%	Title
 		%------------------------------------------------
 		
-		\HRule\\[0.6cm]
+		\HRule\\[0.2cm]
 		
 		{\huge\bfseries ISA \\ [0.4cm] Blood donor appointment scheduling
 		}\\[0.4cm] % Title of your document
@@ -108,17 +111,18 @@
 			\large
 			\textit{Authors}\\
 			Mikkel Liljegren Mathiesen\\
-			\textit{08-10-93}, Mathematics–economics, 9th-semester\\
+			\textit{08-10-93}, Mathematics–economics, 9th semester\\
 			\ \\
 			Johannes Lauritsen\\
-			\textit{12.05.95}, Mathematics–economics, 9th-semester
+			\textit{12-05-95}, Mathematics–economics, 9th semester
 			 % Your name
 		\end{flushleft}
 		
 		\begin{flushleft}
 			\large
 			\textit{Supervisor}\\
-			Assistant Prof. Jacopo Mauro
+			Assistant Prof. Jacopo Mauro\\
+			Postdoc Saverio Giallorenzo
 			
 
 			 % Your name
@@ -148,49 +152,6 @@
 	\end{titlepage}
 	\pagebreak
 
-
-\textbf{Sworn statement}\\ 
-”I hereby solemnly declare that I have personally and independently prepared this paper. All quotations in the text have been marked as such, and the paper or considerable parts of it have not previously been subject to any examination or assessment.” \\\\
-Mikkel Liljegren Mathiesen\\
-Johannes Lauritsen
-
-\section*{Focus area}
-Finding the most efficient formulation of the TSP (Traveling Salesman Problem) formulation and also for the Time Dependent TSP (TDTSP).
-
-\section*{Project description}
-A formulation is a way for formulate a problem using for example LP or MILP-problem.\\
-
-Since the TSP is NP-hard, the most efficient formulation of the TSP is the heuristic algorithms that run in polynomial time and provide close to optimal solutions. For the time dependant TSP-problem we are looking for the most efficient MIP formulation for the time dependent TSP and solving the problem to optimality, with smallest amount of time and computational effort.\\
-
-The question for research would be to ask for the most efficient formulation for the time dependent TSP based on the literature search. One formulation is presented in the third paper, it can be improved by ideas in the first two, and also some other formulations need to be checked in the literature.\\
-
-\textbf{Methods}: Mixed integer programming.\\
-
-\textbf{Tools}: Commercial solver Gurobi with Python as a modeling environment.\\
-
-\textbf{Courses}: Linear and Integer Programming, Combinatorial Optimization.\\
-
-
-\textbf{Literature}:
-
-\begin{enumerate}
-    \item Seda Baş, Giuliana Carello, Ettore Lanzarone, Semih Yalçındağ. An appointment scheduling framework to balance the production of blood units from donation. European Journal of Operational Research. Volume 265. Issue 3. 2018
-
-    \item Jacob Feldman, Nan Liu, Huseyin Topaloglu, Serhan Ziya. Appointment Scheduling Under Patient Preference and No-Show Behavior. Operations Research. 2014
-
-    \item Guido C. Kaandorp, Ger Koole. Optimal outpatient appointment scheduling. Kluwer Academic Publishers-Plenum Publishers. 2007
-
-    \item Kemper, Benjamin \& Klaassen, Chris \& Mandjes, Michel. Optimized appointment scheduling. European Journal of Operational Research. 2014
-
-    \item Samorani, Michele \& LaGanga, Linda. Outpatient Appointment Scheduling Given Individual Day-Dependent No-Show Predictions. European Journal of Operational Research. 2015
-
-    \item Crowther, Mark \& J Cook, Deborah. Trials and Tribulations of Systematic Reviews and Meta-Analyses. Hematology / the Education Program of the American Society of Hematology. American Society of Hematology. Education Program. 2007
-
-    \item Matoušek, Jirí \& Gärtner, Bernd. Understanding and Using Linear Programming. 2007
-
-    \item Russell, Stuart \& Norvig, Peter. Artificial Intelligence: A Modern Approach.  2009
-\end{enumerate}
-
 \thispagestyle{empty}
 \newpage
 \tableofcontents
@@ -199,82 +160,222 @@ The question for research would be to ask for the most efficient formulation for
 
 \section*{Introduction}
 
-
-
-\textbf{Research question}
+An extensive literature review has already been done (see \cite{BD32}) of optimization studies in the healthcare system, which reviews all relevant literature in the years 2003-2016. The paper goes thoroughly through each paper reviewed and categorizes the models used. Then they are able to show the method distribution of the used models. In our literature review, we will include articles also from 2016-2019, which hopefully have new insights in the field. But there will be overlaps in some of the articles since some of the mentioned articles in \cite{BD32} are very relevant for our study.
 
 \bigbreak
 
-Find a schedule for blood and plasma donors which considers no-shows by using overbooking, in order to minimize gaps and hence maximizing the number of completed blood and plasma donations without intro  ducing waiting time for the donor.
+\textbf{Goal}
 
-\section*{Systematic Literature Review}
-
-Search string: appointment scheduling no show \\
-Publication date: 16/09/2013 - 16/09/2019 (6 years) \\
-Language: English \\
-Discipline: engineering, business, education, applied sciences, computer science, international relations, mathematics, social sciences, statistics, political science, economics \\
-
-\textbf{Step 1: Develop inclusion and exclusion criteria}
-
-\begin{table}[H]
-\begin{tabular}{@{}lll@{}}
-\toprule
-Criteria & Inclusion criteria & Exclusion criteria \\ \midrule
-1        &    Articles must be published between 1990 and 2013                 &   Any articles outside of the designated dates 1990–2013                   \\
-2        &      All retrieved articles must be published in English language              &   Any articles that were not published in the English language were excluded.                 \\
-3     &  Only include articles about blood donation & Exclude articles about other similar scheduling problems. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\bigbreak
-\textbf{Step 2: Systematic searches in different databases}
-
-We only have access to University of Southern Denmark's library of articles, hence we will only search inside this database (this database includes more than 600 different databases).
-
-\bigbreak
-\textbf{Step 3: Importing of search results into individual bibliographic software package}
-
-We chose not to use EndnoteX9 as it does not work directly with the collection of databases that SDU's library offer. So we searched directly on SDU's library's webpage.
-
-
-\bigbreak
-\textbf{Step 4: Documenting the search}
+Find a schedule for blood and plasma donors, which considers no-shows by using overbooking in order to minimize gaps and hence maximizing the number of completed blood and plasma donations without introducing waiting time for the donor.
 
 \bigbreak
 
-\textbf{Step 5: Deletion of database duplicates using hierarchy strategy}
+\textbf{Research questions}
 
-Not relevant, since we only used one database.
+\begin{itemize}
+    \item Is it possible to improve the current schedule for Næstved Hospital with respect to the total amount of donations
+    \item Is overbooking a viable solution?
+    \item Is it possible to overbook without increasing waiting time for donors?
+    \item Is it possible to use previous data of donations to predict no shows?
+    \item Is it possible to simulate any given day in the Hospital
+    \item Is it possible to develop a program that computes the optimal schedule?
+    \item Is it possible to develop heuristics that deliver good solutions within a reasonable time?
+    \item Can local search be used to improve the schedule?
+\end{itemize}
+
+\textbf{Mixed Integer Linear Programming}
+
+When solving problems, it is often not possible to use decimal numbers as a solution. Decimal numbers could be a problem, for example, when assigning busses to routes, as a bus is not divisible. Instead, we introduce integer decision variables, possibly alongside real-valued decision variables. Formally, a Mixed Integer Linear Program (MILP) can be defined as follows:
+$$
+\begin{aligned} 
+    \text { maximize } & \quad \mathbf{c}^{T} \mathbf{x} + \mathbf{d}^{T} \mathbf{y} \\
+    \text { subject to } & \quad A \mathbf{x} + B \mathbf{y} \leq \mathbf{b} \\
+    & \quad \mathbf{x} \in \mathbb{R}_{0}^{+} \\
+    & \quad \mathbf{y} \in \mathbb{I}_{0}^{+}
+\end{aligned}
+$$
+where $\mathbf{x}$ is a vector consisting of non-negative continuous variables, $\mathbf{y}$ consist of non-negative integer variables. $A, B$ are $m \times n$ matrix which is given, also $\mathbf{c}, \mathbf{d} \in \mathbb{R}^n$ and $\mathbf{b} \in \mathbb{R}^m$ are given vectors and $\mathbf{0}$ is the zero vector with $n$ entries.
+
+\bigbreak
+\textbf{Local search}
+
+The Local Search (LS) method is a way to improve an already existing solution by exploring the neighborhood. By, for example, using the "Hill-climbing search", which for a maximizing (minimization) problem keeps going in the direction of largest increase (decrease). When the local optimum is reached, the algorithm terminates and returns the (possibly better) new solution. This method will never worsen the initially given solution to the LS, but sometimes by worsening the solution, one can reach a better solution. An algorithm that allows a worsening solution is "Simulated annealing", which performs random walks in some direction that very well may lead to a worse solution. But with a maximization (minimization) problem, one can escape a "low peak" ("high valley") and possible reach a better optimum than with a non-worsening LS.
+
+\bigbreak
+\textbf{Markov Chain}
+
+Given a sequence of random variables $\{X_1,X_2,...,X_n\}$ and $\{I_1,\dots,I_n\}$ states that satisfy the Markov property, which means that the stochastic process is memoryless. So the probability of moving to the next state only depends on the current state and not on the previous states. Then a discrete-time Markov chain must satisfy the following:
+
+\[ Pr(X_{n} = x \ | \ X_1 = x_1, \dots , X_{n-1} = x_{n-1}) = Pr(X_{n} = x \ | \ X_{n-1} = x_{n-1}) 
+\]
+An initial starting state $I_0$ has to be defined.
+\section*{Method}
+
+The main problem is to improve the current schedule. In the world of healthcare, the word \texttt{appointment} is heavily used. Therefore \texttt{appointment scheduling} must a good starting point for the search string. We also need to take no shows into account; otherwise, we may not be able to compute a good schedule. In the end, this gives us the following search string: \texttt{appointment scheduling no show}. One could probably find a better search string. But for our purpose, it should be sufficient.
+
 \bigbreak
 
-\textbf{Step 6: Organisation of relevant and irrelevant articles }
-
-When all relevant articles were found, they were sorted into two categories: "Useful" and "Not useful". The way this worked, was that we both read the abstract of each article and it could only be placed in "Useful" if both agreed that it was indeed useful.
-\bigbreak
-
-\textbf{Step 7: Search of other articles, books, policies by other forms of searching }
-
-Since we found many relevant articles on SDU's library's webpage, then this was the only place we searched.
-\bigbreak
-
-\textbf{Step 8: Systematic rating of relevant articles }
-
+We only have access to the University of Southern Denmark's library of articles. Hence we will only search inside this database (this database includes more than 600 different databases).
 
 \bigbreak
 
-\textbf{Step 9: Validation check }
+Using our search string, we obtain 51,800 results. This can be reduced significantly by introducing a range for the publishing date. We have chosen to look at publications from the last six years (16/09/2013 - 16/09/2019). This reduced the number of results to 16,233. Using only English publications only reduces the number of results to 16,194. But if we also choose specific disciplines (see figure \ref{search-criteria}), we end up with 2,375 publications.
 
 \bigbreak
 
-\textbf{Step 10: Summarising the results of the data analysis in the systematic literature}
+\begin{figure}[H]
+    \begin{framed}
+        \makebox[3.7cm][l]{\textbf{Search string:}} \texttt{appointment scheduling no show} \\
+        \makebox[3.7cm][l]{\textbf{Publication date:}} 16/09/2013 - 16/09/2019 (6 years) \\
+        \makebox[3.7cm][l]{\textbf{Language:}} English \\
+        \makebox[3.7cm][l]{\textbf{Discipline:}} engineering, business, education, applied sciences, computer \\ \makebox[3.7cm][l]{} science, international relations, mathematics, social sciences, \\ \makebox[3.7cm][l]{} statistics, political science, economics
+    \end{framed}
+    \caption{Search criteria}
+    \label{search-criteria}
+\end{figure}
 
 \bigbreak
 
+Using our search criteria, we obtain 2,375 results. Looking only at the first 50 results, we only chose articles with a fitting title, for instance, "Literature review on multi-appointment scheduling problems in hospitals" is excluded due to the term "multi-appointment" as our problem is to make a single appointment for each patient, not a sequence of appointments for each patient.
 
-Articles 1-5
-Review 6
-Books 7-8
+\bigbreak
+
+At this point, we are left with 42 articles. To reduce this number, we need to read each abstract and exclude the article that does not seem relevant. This left us with 17 articles that are most likely useful to some extent (the exclusion reasoning can be found in Figure \ref{bad}). To further reduce this number, we start reading each article. And when it is clear that the article is either a good or a bad fit, we will sort it as such. After this process, we are left with two fitting articles and 15 unfitting articles (the exclusion reasoning can be found in Figure \ref{semi-good}).
+
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[scale=0.5]{PRISMA.pdf}
+    \end{center}
+    \caption{PRISMA diagram}
+    \label{prisma}
+\end{figure}
+
+\section*{Results}
+
+\begin{figure}[H]
+    \begin{table}[H]
+    \begin{tabularx}{\textwidth}{@{} c Y @{}}
+    \toprule
+    Publication & Reason \\ \midrule
+    \cite{BD29}        &    They use a Markov decision process that is shown to be weakly coupled. Hence they are able to use the Lagrangian relaxation method. \\
+    \cite{BD25}        &    Aims to find individual no-show probabilities by looking at no-show history. Probabilities are computed by regression-like modeling and functional approximation, using the sum of exponential functions, to produce probability estimates. \\
+    \bottomrule
+    \end{tabularx}
+    \end{table}
+    \caption{Final selection of articles}
+    \label{good}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{table}[H]
+    \begin{tabularx}{\textwidth}{@{} c Y @{}}
+    \toprule
+    Publication & Reason \\ \midrule
+    \cite{BD38}        &    Single-server queuing model. It requires that the patients have to visit the same doctor and do not accept walk-ins. \\
+    \cite{BD06}        &    Single-server queuing model. \\
+    \cite{BD40}        &    Single-server queuing model. \\
+    \cite{BD15}        &    Single-server queuing model. \\
+    \cite{BD31}        &    Single-server queuing model. \\
+    \cite{BD14}        &    Assumes that all donors have identical service time and the same no-show probability. \\
+    \cite{BD41}        &    Assumes fixed consultation length. This is too restrictive for our problem. \\
+    \cite{BD09}        &    Single-server queuing model. \\
+    \cite{BD18}        &    Takes an analytical approach instead of using simulation techniques (which is what we want) \\
+    \cite{BD42}        &    It is assumed that the service time for each donor is the same, and walk-in donors are not considered. \\
+    \cite{BD19}        &    Giving same-day appointments to likely shows and future-day appointments to likely no-shows. Not useful for our case as we cannot expect donors to accept rescheduling. \\
+    \cite{BD48}        &    Only one no-show probability, which is too restrictive. \\
+    \cite{BD44}        &    Uses health information that we are not provided. \\
+    \cite{BD05}        &    Single-server queuing model. \\
+    \cite{BD47}        &    Considers only one no-show probability, which is too restrictive. \\
+    \bottomrule
+    \end{tabularx}
+    \end{table}
+    \caption{Articles first chosen based on abstract, but then excluded after skimming}
+    \label{semi-good}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    
+    \begin{table}[H]
+    \begin{tabularx}{\textwidth}{@{} c Y @{}}
+    \toprule
+    Publication & Reason \\ \midrule
+    \cite{BD32}        &    This is a literature review in the outpatient appointment system in healthcare of many optimization studies, which gives a great overview of the literature but does not help in directly solving our problem.  \\
+    \cite{BD45}        &    Account for patient choices in order to improve patient satisfaction. Computes a complete set of appointments that donors can then book from. No-show is not considered. \\
+    \cite{BD36}        &    Single-server queuing model. \\
+    \cite{BD43}        &    Free patient from blind waits. Not relevant for our study as we expect the vast majority of donors to be unwilling to wait. Single-server queuing model. \\
+    \cite{BD20}        &    Allows for urgent patients. Not directly applicable to our study. \\
+    \cite{BD04}        &    Single server queuing model. Customers are assumed to arrive deterministically. \\
+    \cite{BD08}        &    It does not account for no-shows. \\
+    \cite{BD13}        &    Single-server queuing model. \\
+    \cite{BD30}        &    It uses different characteristics of individual patients to estimate examination time, several pieces of information are needed to implement this, many of which we do not have for our problem. \\
+    \cite{BD23}        &    Single-server queuing model. \\
+    \cite{BD12}        &    Assumes a constant service time for each donor. \\
+    \cite{BD26}        &    Choose how early a patient can make a booking. Interesting as there is likely correspondence between no-shows and how soon a booking was made. Uses a single server queuing model. \\
+    \cite{BD10}        &    The article only investigates the problem of donor cancellations and no-shows but does not solve the problem with scheduling. \\ 
+    \cite{BD11}        &    A single-server queuing model. \\
+    \cite{BD16}        &    The article does not consider no-shows and only looks at a single day,  but many donors prefer different days in the week, which we would like to include in our model.  \\
+    \cite{BD17}        &    The article does not consider no-shows and walk-in donors, which we would like to include in our model.  \\
+    \cite{BD21}        &    The article does not consider no-shows and walk-in donors, which we would like to include in our model.\\
+    \cite{BD22}        &    The article considers patient preferences to different physicians, which does not fit our approach. \\
+    \cite{BD24}        &    The article considers the same no-show probability for all donors. \\
+    \cite{BD28}        &    The article does not consider donors to "drop-in" without an appointment, which we have to consider. \\
+    
+    \cite{BD33}        &    The article does not solve the BD scheduling problem but instead discuss some of the literature and unaddressed problems in the field. \\ 
+    \cite{BD34}        &    The article limits the number of days a donor can book an appointment time in advance, which we are not interested in. \\
+    \bottomrule
+    \end{tabularx}
+    \end{table}
+
+    \caption{Omitted articles based on abstract}
+    \label{bad}
+\end{figure}
+
+\begin{figure}[H]
+\ContinuedFloat
+    \centering
+
+    \begin{table}[H]
+    \begin{tabularx}{\textwidth}{@{} c Y @{}}
+    \toprule
+    Publication & Reason \\ \midrule
+    \cite{BD35}        &    The article considers a single server problem and assume a constant service time for all donors. No-shows are also neglected. \\
+    \cite{BD37}        &    The article sets the no-show rate to a fixed constant for all donors; in our model, we would like to be able to distinguish between each donor. \\
+    \cite{BD46}        &    The article has its focus on donors' unpunctuality; our focus is more on donors being no-shows.  \\
+    \bottomrule
+    \end{tabularx}
+    \end{table}
+
+    \caption{Omitted articles based on abstract}
+    \label{bad}
+\end{figure}
+
+
+\section*{Discussion}
+
+% \textcolor{red}{\textbf{Summarise and discuss the findings and conclusions of the review in a balanced and impartial way, in the context of previous theory, evidence and practice}}
+
+Most articles consider the single-server queueing model. This is not what we want, as we have more than one chair in the clinic. In fact, there are up to 11 chairs available (7 for plasma and 4 for blood). Some articles considers a fixed no-show rate, this is not what we want since we have data on each donor and would like to have different no-show rates for each donor. Some articles have constant service time for each donor, this is not what we want - instead we want a stochastic service time since this is more realistic. Some articles does not consider walk-ins, but we would like to take into account a stochastic amount of walk-ins, since this is more realistic. 
+
+%\textcolor{red}{\textbf{Explicitly and intuitively link your conclusions to the evidence reviewed}}
+
+%\textcolor{red}{\textbf{Discuss the strengths and limitations of the literature and, by implication, the review, including considering the scientific quality of included studies and methodological problems in the literature (e.g., methodological rigor or lack thereof, the amount of evidence, its consistency, and its methodological diversity). Conclusions should be tempered by the flaws and weaknesses in the evidence. Perhaps propose a new conceptualisation or theory which accounts for inconsistencies. (Baumeister & Leary, 1997)}}
+
+%\textcolor{red}{\textbf{Establish to what extent existing research has progressed towards clarifying a particular problem/formulate general statements or an overarching conceptualization. Quantitative or qualitative reviews may conclude that the available evidence suggests one of four possibilities (see Baumeister & Leary, 1997, for a detailed discussion of these)}}
+
+%\textcolor{red}{\textbf{Comment on, evaluate, extend, or develop theory}}
+
+%\textcolor{red}{\textbf{Draw conclusions and make recommendations for practice}}
+
+%\textcolor{red}{\textbf{Describe directions for future theory, evidence and practice by pointing out remaining unresolved issues}}
+
+
+
+
+
+\bigbreak
+
 
 \section*{Blood donation system}
 
@@ -289,6 +390,6 @@ Books 7-8
 \newpage
 
 \bibliographystyle{unsrt}
-\bibliography{R}
+\bibliography{bibliography}
 
 \end{document}
