@@ -12,6 +12,7 @@
 \usepackage{blkarray}
 \usepackage{geometry}  
 \usepackage{bigstrut}
+\usepackage{pifont}
 \usepackage{hyperref}
 \usepackage{bookmark}
 \usepackage{fancyhdr}
@@ -20,21 +21,16 @@
 \usepackage{lastpage}
 \usepackage{tabto}
 \usepackage{wrapfig}
-\usepackage[utf8]{inputenc}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{subcaption}
-\newcommand{\mc}[1]{\textbf{Mc: #1}}
 \usepackage{fancyhdr}
-\usemintedstyle{xcode}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{microtype}
 \usepackage{booktabs}
 \usepackage{dutchcal}
 \usepackage{framed}
-\usepackage{babelbib}
 \usepackage{natbib}
-\usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{minted}
@@ -49,32 +45,23 @@
 \usepackage{lastpage}
 \usepackage{tabto}
 \usepackage{wrapfig}
-\usepackage[utf8]{inputenc}
-\setminted[python]{numbersep = 10pt, bgcolor = lightgrey, breaklines, autogobble, fontsize=\footnotesize, baselinestretch=1.2}
+\usepackage{lipsum}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\newcommand{\xmark}{\color{red}\ding{53}}%
+\newcommand{\cmark}{\color{green}\ding{51}}%
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X} 
 \usepackage{adjustbox}
-\definecolor{lightgrey}{rgb}{0.97,0.97,0.97}
-\definecolor{grey}{rgb}{0.7,0.7,0.7}
 \setlength{\parindent}{0pt}
-%\pagestyle{fancy}
+\pagestyle{fancy}
 \fancyfoot{}
 \lhead{\textbf{M. L. Mathiesen} \\
  \textbf{J. Lauritsen}}
-\pagestyle{plain} 
 \fancyfoot[c]{Page \thepage\ of \pageref{LastPage}}
-\pagestyle{fancy}
 
-\usepackage{lipsum} 
-
-\usepackage{algorithm}
-\usepackage[noend]{algpseudocode}
-
-\usepackage{multirow}
-
-\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
-\algtext*{Indent}
-\algtext*{EndIndent}
-
-\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X} 
+\usemintedstyle{xcode}
+\setminted[python]{numbersep = 10pt, bgcolor = lightgrey, breaklines, autogobble, fontsize=\footnotesize, baselinestretch=1.2}
 
 \begin{document}
 	\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
@@ -120,7 +107,7 @@
 		
 		\begin{flushleft}
 			\large
-			\textit{Supervisor}\\
+			\textit{Supervisors}\\
 			Associate Professor Jacopo Mauro\\
 			Postdoc Saverio Giallorenzo
 			
@@ -155,16 +142,98 @@
 \thispagestyle{empty}
 \newpage
 \tableofcontents
+\newpage
 \setcounter{page}{1}
 
-\section*{Introduction}
+\section{Introduction}
 
-\subsection*{Goal}
+Voluntary blood and plasma donation is an essential part of the healthcare system in Denmark. The blood and plasma is vital in surgery, production of medicine and many others. But since it is completely voluntary for the donors, a large percentile does not show up ($\approx 30\%$ for Næstved sygehus, which is the place we consider in this article). The majority of the donors book a time slot online, when a time slot is booked, a bed is blocked in that time slot and cannot be re-assigned to other donors. So if a donor does not show up for an appointment, the hospital loses a precious opportunity to collect life-saving donations. In this project, we will attempt to create a scheduling system that reduces the amount of empty donation beds. This is done by implementing an event simulator that simulates what happens in one day in the donation room. The simulator will provide information about each donor: no-show, arrival time, donation time, if any errors occur etc. Then the idea is that our scheduling system will allow overbooking and the event simulator will provide useful data for when overbooking opportunities arises. In the event simulations, each donors historical data will be considered such as no-show rates, donation time and more.
+
+
+
+
+
+\subsection{Goal}
 
 Find a schedule for blood and plasma donors, which considers no-shows by using overbooking in order to minimize gaps and hence maximizing the number of completed blood and plasma donations without introducing waiting time for the donor.
 ... Explain motivation
 
-\subsection*{Research questions}
+\subsection{Inclusion questions}
+When reading the articles we look for the following:
+
+a = Multi-Server
+
+b = Individual service time
+
+c = Stochastic service time
+
+
+d = Individual no-show probability
+
+e = Involves simulation
+
+f = Stochastic arrival time
+
+g = Focus on no-show.
+
+\begin{figure}[H]
+    \centering
+    \begin{table}[H]
+    \begin{tabularx}{\textwidth}{| @{} c | c | c | c| c| c| c| c|}
+    \cline{1-8}
+    & \multicolumn{7}{c}{\textbf{Reasons}} \\
+    \cline{1-8}
+    \textbf{Publication} & a & b & c & d & e & f & g\\ 
+    \cline{1-8}
+    \cite{BD29}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD25}        &  &  &  &  &  &  &  \\       \cline{1-8}
+    \cite{BD38}        & \xmark & \cmark & \cmark  & \xmark  & \cmark  & \cmark  & \xmark \\     \cline{1-8}
+    \cite{BD06}        & \xmark & \cmark  & \xmark  & \xmark & \cmark & \xmark  & \cmark  \\        \cline{1-8}
+    \cite{BD40}        & \xmark  & \cmark  &  \xmark  & \xmark  & \xmark  & \xmark & \cmark \\        \cline{1-8}
+    \cite{BD15}     & \xmark & \xmark & \xmark  & \xmark  & \xmark  & \xmark  & \xmark  \\        \cline{1-8}
+    \cite{BD31}     &  \xmark & \xmark & \xmark  & \xmark  & \xmark & \xmark &  \cmark \\        \cline{1-8}
+    \cite{BD14}        & \xmark & \cmark & \xmark  &  \cmark & \cmark & \xmark  & \cmark  \\        \cline{1-8}
+    \cite{BD41}        &  \xmark & \cmark & \cmark  &  \xmark & \cmark & \cmark &  \cmark \\        \cline{1-8}
+    \cite{BD09}        & \xmark & \cmark  & \cmark  & \xmark  & \cmark & \xmark  & \xmark  \\        \cline{1-8}
+    \cite{BD18}        & \xmark & \cmark  & \cmark  & \xmark & \xmark  & \xmark & \cmark  \\        \cline{1-8}
+    \cite{BD42}       & \xmark & \cmark  & \cmark & \xmark  & \xmark      & \xmark  & \cmark \\        \cline{1-8}
+    \cite{BD19}         & \xmark & \xmark  & \xmark  & \cmark & \cmark  & \xmark  & \cmark  \\        \cline{1-8}
+    \cite{BD48}         & \cmark & \cmark  &  \cmark & \cmark & \cmark & \xmark  & \cmark  \\        \cline{1-8}
+    \cite{BD44}         & \cmark & \cmark & \cmark  &  \xmark & \cmark  & \xmark & \cmark  \\        \cline{1-8}
+    \cite{BD05}         & \xmark & \cmark & \cmark  & \cmark  & \cmark  & \cmark  & \cmark  \\        \cline{1-8}
+    \cite{BD47}        & \xmark & \cmark & \cmark & \xmark &  \cmark & \xmark & \cmark \\        \cline{1-8}
+    \cite{BD32}        & \xmark & \xmark &  \xmark&\xmark  &\xmark  &  \xmark& \xmark  \\        \cline{1-8}
+    \cite{BD45}        & \xmark &  &  & \xmark & \cmark & \xmark  & \xmark \\        \cline{1-8}
+    \cite{BD36}        &  & \cmark & \cmark  & \xmark & \cmark  &  & \xmark \\        \cline{1-8}
+    \cite{BD43}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD20}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD04}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD08}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD13}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD30}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD23}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD12}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD26}      & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD10}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD11}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD16}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD17} & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD21}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD22}& &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD24}& &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD28}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD33}        & &  &  &  &  &  &  \\        \cline{1-8}
+    \cite{BD34}& &  &  &  &  &  &  \\        \cline{1-8}
+    \end{tabularx}
+    \end{table}
+
+    \caption{How many inclusion questions each article fulfills}
+    \label{bad}
+\end{figure}
+
+
+
+\subsection{Research questions}
 
 \begin{itemize}
     \item Is it possible to improve the current schedule for Næstved Hospital with respect to the total amount of donations
@@ -177,7 +246,7 @@ Find a schedule for blood and plasma donors, which considers no-shows by using o
     \item Can local search be used to improve the schedule?
 \end{itemize}
 
-\subsection*{Mixed Integer Linear Programming}
+\subsection{Mixed Integer Linear Programming}
 
 When solving problems, it is often not possible to use decimal numbers as a solution. Decimal numbers could be a problem, for example, when assigning busses to routes, as a bus is not divisible. Instead, we introduce integer decision variables, possibly alongside real-valued decision variables. Formally, a Mixed Integer Linear Program (MILP) can be defined as follows:
 $$
@@ -191,19 +260,19 @@ $$
 where $\mathbf{x}$ is a vector consisting of non-negative continuous variables, $\mathbf{y}$ consist of non-negative integer variables. $A, B$ are $m \times n$ matrix which is given, also $\mathbf{c}, \mathbf{d} \in \mathbb{R}^n$ and $\mathbf{b} \in \mathbb{R}^m$ are given vectors and $\mathbf{0}$ is the zero vector with $n$ entries.
 
 \bigbreak
-\subsection*{Local search}
+\subsection{Local search}
 
 The Local Search (LS) method is a way to improve an already existing solution by exploring the neighborhood. By, for example, using the "Hill-climbing search", which for a maximizing (minimization) problem keeps going in the direction of largest increase (decrease). When the local optimum is reached, the algorithm terminates and returns the (possibly better) new solution. This method will never worsen the initially given solution to the LS, but sometimes by worsening the solution, one can reach a better solution. An algorithm that allows a worsening solution is "Simulated annealing", which performs random walks in some direction that very well may lead to a worse solution. But with a maximization (minimization) problem, one can escape a "low peak" ("high valley") and possible reach a better optimum than with a non-worsening LS.
 
 \bigbreak
-\subsection*{Markov Chain}
+\subsection{Markov Chain}
 
 Given a sequence of random variables $\{X_1,X_2,...,X_n\}$ and $\{I_1,\dots,I_n\}$ states that satisfy the Markov property, which means that the stochastic process is memoryless. So the probability of moving to the next state only depends on the current state and not on the previous states. Then a discrete-time Markov chain must satisfy the following:
 
 \[ Pr(X_{n} = x \ | \ X_1 = x_1, \dots , X_{n-1} = x_{n-1}) = Pr(X_{n} = x \ | \ X_{n-1} = x_{n-1}) 
 \]
 An initial starting state $I_0$ has to be defined.
-\section*{Process description}
+\section{Process description}
 The blood/plasma donation can be seen in Figure \ref{flow}. At the initial stage, the plasma and blood donors are scheduled. At the next stage, the donor either shows up or doesn't with different probabilities depending on the donor type. If a donor is a no-show, they exit the system; the remaining donors continue to the next step. The next step is filling out their health information, which approximately takes 5 minutes. Afterward, they are interviewed by the reception (a nurse), which takes approximately 3 minutes; approximately 1.47\%/0.48\% gets rejected of the blood and plasma donors, respectively. Then the nurse will prepare a chair for the donor, and afterward, the needle insertion takes place (this process takes approximately 2-4\textcolor{red}{?} minutes). Then the collection of blood/plasma takes place, which approximately takes 15/45 minutes, respectively. Different factors might cause the collection process to fail; approximately 5.45\%/2.61\% fails the collection process for blood and plasma donors, respectively. If a donor fails the collections process, then they also get the opportunity to rest. If the collection is successful, then the nurse checks the donor's ID, which takes less than 1 minute. Then the donor can rest and depend on the donation type; it approximately takes 10 and 1 minutes for blood and plasma donation, respectively). When the donor is ready, they exit the system. Then the terminal stage occurs for which the nurse prepares the chair for the next donor, and this takes approximately 1 and 4 minutes for blood and plasma donation, respectively.
 
 %Alle tapninger er mødt
@@ -223,13 +292,13 @@ The blood/plasma donation can be seen in Figure \ref{flow}. At the initial stage
 
 
 
-\section*{Literature review}
+\section{Literature review}
 
 An extensive literature review has already been done (see \cite{BD32}) of optimization studies in the healthcare system, which reviews all relevant literature in the years 2003-2016. The paper goes thoroughly through each paper reviewed and categorizes the models used. Then they are able to show the method distribution of the used models. In our literature review, we will include articles also from 2016-2019, which hopefully have new insights in the field. But there will be overlaps in some of the articles since some of the mentioned articles in \cite{BD32} are very relevant for our study.
 
 \bigbreak
 
-\section*{Method}
+\section{Method}
 
 The main problem is to improve the current schedule. In the world of healthcare, the word \texttt{appointment} is heavily used. Therefore \texttt{appointment scheduling} must a good starting point for the search string. We also need to take no shows into account; otherwise, we may not be able to compute a good schedule. In the end, this gives us the following search string: \texttt{appointment scheduling no show}. One could probably find a better search string. But for our purpose, it should be sufficient.
 
@@ -280,7 +349,7 @@ At this point, we are left with 42 articles. To reduce this number, we need to r
     \label{prisma}
 \end{figure}
 
-\section*{Results}
+\section{Results}
 
 \begin{figure}[H]
     \begin{table}[H]
@@ -381,7 +450,7 @@ At this point, we are left with 42 articles. To reduce this number, we need to r
 \end{figure}
 
 
-\section*{Discussion}
+\section{Discussion}
 
 % \textcolor{red}{\textbf{Summarise and discuss the findings and conclusions of the review in a balanced and impartial way, in the context of previous theory, evidence and practice}}
 
@@ -406,15 +475,15 @@ Most articles consider the single-server queueing model. This is not what we wan
 \bigbreak
 
 
-\section*{Blood donation system}
+\section{Blood donation system}
 
-\section*{Simulation model}
+\section{Simulation model}
 
-\section*{Experiments}
+\section{Experiments}
 
-\section*{Results}
+\section{Results}
 
-\section*{Conclusion}
+\section{Conclusion}
 
 \newpage
 
