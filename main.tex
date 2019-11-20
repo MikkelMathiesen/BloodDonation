@@ -1,54 +1,33 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[a4paper,margin=1in]{geometry}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{microtype}
-\usepackage{booktabs}
-\usepackage{dutchcal}
-\usepackage{graphicx}
-\usepackage{pdfpages}
-\usepackage{minted}
-\usepackage{xcolor}
-\usepackage{blkarray}
-\usepackage{geometry}  
-\usepackage{bigstrut}
-\usepackage{pifont}
-\usepackage{hyperref}
-\usepackage{bookmark}
-\usepackage{fancyhdr}
-\usepackage{multicol}
-\usepackage{lipsum}
-\usepackage{lastpage}
-\usepackage{tabto}
-\usepackage{wrapfig}
 \usepackage[font=small,labelfont=bf]{caption}
-\usepackage{subcaption}
-\usepackage{fancyhdr}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{microtype}
+\usepackage{bigstrut}
+\usepackage{blkarray}
+\usepackage{bookmark}
 \usepackage{booktabs}
 \usepackage{dutchcal}
-\usepackage{framed}
-\usepackage{natbib}
-\usepackage{graphicx}
-\usepackage{pdfpages}
-\usepackage{minted}
-\usepackage{xcolor}
-\usepackage{blkarray}
-\usepackage{bigstrut}
-\usepackage{hyperref}
-\usepackage{bookmark}
 \usepackage{fancyhdr}
-\usepackage{multicol}
-\usepackage{lipsum}
+\usepackage{framed}
+\usepackage{geometry}  
+\usepackage{graphicx}
+\usepackage{hyperref}
 \usepackage{lastpage}
-\usepackage{tabto}
-\usepackage{wrapfig}
-\usepackage{lipsum}
+\usepackage{microtype}
+\usepackage{multicol}
 \usepackage{multirow}
-\usepackage{tabularx}
+\usepackage{natbib}
+\usepackage{pdfpages}
+\usepackage{pifont}
 \usepackage{ragged2e}
+\usepackage{subcaption}
+\usepackage{tabto}
+\usepackage{tabularx}
+\usepackage{wrapfig}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{listings}
 \newcommand{\xmark}{\color{red}\ding{53}}%
 \newcommand{\cmark}{\color{green}\ding{51}}%
 \newcolumntype{Y}{>{\RaggedRight\arraybackslash}X} 
@@ -60,8 +39,52 @@
  \textbf{J. Lauritsen}}
 \fancyfoot[c]{Page \thepage\ of \pageref{LastPage}}
 
-\usemintedstyle{xcode}
-\setminted[python]{numbersep = 10pt, bgcolor = lightgrey, breaklines, autogobble, fontsize=\footnotesize, baselinestretch=1.2}
+% \usemintedstyle{xcode}
+% \setminted[python]{numbersep = 10pt, bgcolor = lightgrey, breaklines, autogobble, fontsize=\footnotesize, baselinestretch=1.2}
+
+
+\definecolor{sbase03}{HTML}{002B36}
+\definecolor{sbase02}{HTML}{073642}
+\definecolor{sbase01}{HTML}{586E75}
+\definecolor{sbase00}{HTML}{657B83}
+\definecolor{sbase0}{HTML}{839496}
+\definecolor{sbase1}{HTML}{93A1A1}
+\definecolor{sbase2}{HTML}{EEE8D5}
+\definecolor{sbase3}{HTML}{FDF6E3}
+\definecolor{syellow}{HTML}{B58900}
+\definecolor{sorange}{HTML}{CB4B16}
+\definecolor{sred}{HTML}{DC322F}
+\definecolor{smagenta}{HTML}{D33682}
+\definecolor{sviolet}{HTML}{6C71C4}
+\definecolor{sblue}{HTML}{268BD2}
+\definecolor{scyan}{HTML}{2AA198}
+\definecolor{sgreen}{HTML}{859900}
+
+\usepackage{FiraMono}
+\lstdefinestyle{solarized-light}{
+  frame=lines,
+  xleftmargin=0pt,
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=1,
+  columns=fixed,
+  mathescape=true,
+  extendedchars=true,
+  backgroundcolor=\color{sbase3},
+  keywordstyle=\color{scyan},
+  stringstyle=\color{sviolet},
+  numberstyle=\color{sviolet},
+  identifierstyle=\color{sbase03},
+  commentstyle=\color{sgreen},
+  basicstyle=\color{black}\ttfamily\lst@ifdisplaystyle\footnotesize\fi,
+}
+
+% \textbf{\cprotect{\verb|a|}}
+
+\lstnewenvironment{python}
+{\lstset{language=Python,style=solarized-light}}
+{}
 
 \begin{document}
 	\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
@@ -469,8 +492,85 @@ Most articles consider the single-server queueing model. This is not what we wan
 %\textcolor{red}{\textbf{Describe directions for future theory, evidence and practice by pointing out remaining unresolved issues}}
 
 
+\section{EXAMPLE OF PYTHON CODE}
 
-
+\begin{python}
+    # Python program for implementation of MergeSort 
+  
+# Merges two subarrays of arr[]. 
+# First subarray is arr[l..m] 
+# Second subarray is arr[m+1..r] 
+def merge(arr, l, m, r): 
+    n1 = m - l + 1
+    n2 = r- m 
+  
+    # create temp arrays 
+    L = [0] * (n1) 
+    R = [0] * (n2) 
+  
+    # Copy data to temp arrays L[] and R[] 
+    for i in range(0 , n1): 
+        L[i] = arr[l + i] 
+  
+    for j in range(0 , n2): 
+        R[j] = arr[m + 1 + j] 
+  
+    # Merge the temp arrays back into arr[l..r] 
+    i = 0     # Initial index of first subarray 
+    j = 0     # Initial index of second subarray 
+    k = l     # Initial index of merged subarray 
+  
+    while i < n1 and j < n2 : 
+        if L[i] <= R[j]: 
+            arr[k] = L[i] 
+            i += 1
+        else: 
+            arr[k] = R[j] 
+            j += 1
+        k += 1
+  
+    # Copy the remaining elements of L[], if there 
+    # are any 
+    while i < n1: 
+        arr[k] = L[i] 
+        i += 1
+        k += 1
+  
+    # Copy the remaining elements of R[], if there 
+    # are any 
+    while j < n2: 
+        arr[k] = R[j] 
+        j += 1
+        k += 1
+  
+# l is for left index and r is right index of the 
+# sub-array of arr to be sorted 
+def mergeSort(arr,l,r): 
+    if l < r: 
+  
+        # Same as (l+r)/2, but avoids overflow for 
+        # large l and h 
+        m = (l+(r-1))/2
+  
+        # Sort first and second halves 
+        mergeSort(arr, l, m) 
+        mergeSort(arr, m+1, r) 
+        merge(arr, l, m, r) 
+  
+  
+# Driver code to test above 
+arr = [12, 11, 13, 5, 6, 7] 
+n = len(arr) 
+print ("Given array is") 
+for i in range(n): 
+    print ("%d" %arr[i]), 
+  
+mergeSort(arr,0,n-1) 
+print ("\n\nSorted array is") 
+for i in range(n): 
+    print ("%d" %arr[i]), 
+}
+\end{python}
 
 \bigbreak
 
